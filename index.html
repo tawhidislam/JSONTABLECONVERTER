@@ -28,22 +28,21 @@
 </head>
 
 <body>
-    <h3>
-        Click the button to convert.
-    </h3>
-    <input type='button' onclick='tableFromJson()' value='Create Table from JSON data' />
+    
+  
 
     <p id='showData'></p>
 
-    <p id='msg'></p>
+    
 </body>
 
 <script>
-    let tableFromJson = () => {
+    
         // the json data.
         const myBooks = [
 
-             {
+            {
+                "1": [{
                     "Time": "01:35 AM",
                     "Location": "dhaka bangladesh",
                     "BUS Detail": {
@@ -53,20 +52,23 @@
                     "busNo": "AK119",
                     "arrTime": "05:40 AM",
                     "arrival Loc": "barisal"
-                }
+                }]
+            }
+
         ]
 
         // Extract value from table header. 
-        
+
         let col = [];
         for (let i = 0; i < myBooks.length; i++) {
             for (let key in myBooks[i]) {
-                if (col.indexOf(key) === -1) {
+                if (col.indexOf(key) == -1) {
                     col.push(key);
+                    
+
                 }
             }
         }
-
         // Create a table.
         const table = document.createElement("table");
 
@@ -85,16 +87,31 @@
             tr = table.insertRow(-1);
 
             for (let j = 0; j < col.length; j++) {
-                let tabCell = tr.insertCell(-1);
-                tabCell.innerHTML = myBooks[i][col[j]];
+                const tabcel = tr.insertCell(-1);
+                if (typeof myBooks[i][col[j]] === 'object') {
+                    tabcel.innerHTML =
+                        `name:${myBooks[i][col[j]].air_Name} <br/> logo:${myBooks[i][col[j]].air_Logo}`;
+                        
+                        
+                } else {
+                    tabcel.innerHTML = myBooks[i][col[j]];
+                }
+
             }
+
+
+
+            // for (let j = 0; j < col.length; j++) {
+            //     let tabCell = tr.insertCell(-1);
+            //     tabCell.innerHTML = myBooks[i][col[j]];
+            // }
         }
 
         // Now, add the newly created table with json data, to a container.
         const divShowData = document.getElementById('showData');
         divShowData.innerHTML = "";
         divShowData.appendChild(table);
-    }
+    
 </script>
 
 </html>
